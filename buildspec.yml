@@ -1,0 +1,19 @@
+version: 0.1
+
+phases:
+  install:
+    commands:
+    - echo Nothing to do in commands phase...
+  pre_build:
+    commands:
+    - echo Nothing to do in the pre_build phase...
+  build:
+    commands:
+    - echo Build started on `date`
+    - sudo npm install
+  post_build:
+    commands:
+    - sudo echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+    - sudo npm publish --access restricted
+    - echo Build completed on `date`
+

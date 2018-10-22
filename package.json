@@ -2,10 +2,24 @@
   "name": "@filepounder/mongo-magic",
   "version": "0.0.1",
   "description": "mongo magic utils",
+  "keywords": [
+    "mongodb"
+  ],
   "author": {
-    "name": "Martin Naude",
-    "email": "martin@filepounder.com"
+    "name": "FilePounder Inc.",
+    "email": "info@filepounder.com"
   },
+  "contributors": [
+    {
+      "name": "Martin Naude",
+      "email": "martin@filepounder.com"
+    },
+    {
+      "name": "Thiren Bunsee",
+      "email": "thiren@filepounder.com"
+    }
+  ],
+  "license": "UNLICENSED",
   "dependencies": {
     "async": "2.1.4",
     "check-types": "7.0.1",
@@ -16,7 +30,7 @@
     "underscore.string": "3.3.4"
   },
   "engines": {
-    "node": ">=5.3.2"
+    "node": ">=6"
   },
   "devDependencies": {
     "mocha": "^5.2.0"

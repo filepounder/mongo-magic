@@ -1,10 +1,14 @@
 .git*
+.DS_Store
+.idea/
+.npmrc
+**/*.tgz
 docs/
 examples/
 support/
 test/
+package/
 testing.js
-.DS_Store
 coverage.html
 lib-cov
-.idea/
+buildspec.yml

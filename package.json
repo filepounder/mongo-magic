@@ -2,12 +2,24 @@
   "name": "@filepounder/mongo-magic",
   "version": "0.0.1",
   "description": "mongo magic utils",
+  "main": "index.js",
+  "scripts": {
+
+  },
+  "engines": {
+    "node": ">=6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/filepounder/monog-magic.git"
+  },
   "keywords": [
     "mongodb"
   ],
   "author": {
     "name": "FilePounder Inc.",
-    "email": "info@filepounder.com"
+    "email": "info@filepounder.com",
+    "url": "https://filepounder.com"
   },
   "contributors": [
     {
@@ -28,9 +40,6 @@
     "mongodb": "3.1.8",
     "odata-parser": "1.4.1",
     "underscore.string": "3.3.4"
-  },
-  "engines": {
-    "node": ">=6"
   },
   "devDependencies": {
     "mocha": "^5.2.0"

@@ -1,5 +1,9 @@
 version: 0.2
 
+env:
+  parameter-store:
+    NPM_TOKEN: "code-build-prod-npm-deploy-token"
+
 phases:
   install:
     commands:
@@ -13,7 +17,8 @@ phases:
     - sudo npm install
   post_build:
     commands:
-    - sudo echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+    - sudo echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
+    - sudo npm whoami
     - sudo npm publish --access restricted
     - echo Build completed on `date`
 

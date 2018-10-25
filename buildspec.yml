@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   parameter-store:
-    NPM_TOKEN: "code-build-prod-npm-deploy-token"
+    NPM_TOKEN: "code-build-prod-npm-publish-token"
 
 phases:
   install:

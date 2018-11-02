@@ -31,13 +31,13 @@
   ],
   "license": "UNLICENSED",
   "dependencies": {
-    "async": "2.1.4",
-    "check-types": "7.0.1",
-    "merge": "1.2.0",
-    "moment": "2.17.1",
+    "async": "2.6.1",
+    "check-types": "7.4.0",
+    "merge": "1.2.1",
+    "moment": "2.22.2",
     "mongodb": "3.1.8",
     "odata-parser": "1.4.1",
-    "underscore.string": "3.3.4"
+    "underscore.string": "3.3.5"
   },
   "devDependencies": {
     "mocha": "^5.2.0"

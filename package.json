@@ -33,7 +33,7 @@
       "email": "thiren@filepounder.com"
     }
   ],
-  "license": "UNLICENSED",
+  "license": "MIT",
   "dependencies": {
     "async": "2.6.1",
     "check-types": "7.4.0",

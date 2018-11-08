@@ -19,6 +19,6 @@ phases:
     commands:
     - sudo echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
     - sudo npm whoami
-    - sudo npm publish --access restricted
+    - sudo npm publish --access public
     - echo Build completed on `date`
 

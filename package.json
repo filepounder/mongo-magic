@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/filepounder/monog-magic.git"
+    "url": "git+https://github.com/filepounder/mongo-magic.git"
   },
   "keywords": [
     "mongodb"

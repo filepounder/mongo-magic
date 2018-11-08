@@ -8,15 +8,9 @@ const Collection = require('../lib').Collection;
 const MongoQuery = require('../lib').MongoQuery;
 
 const config = {
+    'databaseName': 'mongoutilstests',
     'connectionString': 'mongodb://localhost:27017',
-    'database': 'mongoutilstests',
     'connectionOptions': {
-        'server': {
-            'socketOptions': {
-                'keepAlive': 1
-            },
-            'auto_reconnect': true
-        },
         'useNewUrlParser': true
     }
 };
@@ -39,7 +33,7 @@ describe('Collection', function () {
                 });
             },
             (cb) => {
-                _db = client.db(config.database);
+                _db = client.db(config.databaseName);
 
                 _db.collections(function (err, collections) {
                     if (err) {
@@ -57,6 +51,9 @@ describe('Collection', function () {
                 });
             }
         ], function (err) {
+            if (err) {
+                console.log(err);
+            }
             done(err);
         });
     });
@@ -69,11 +66,11 @@ describe('Collection', function () {
         done();
     });
 
-    it('should throw an error when no config specified', function () {
+    it('should throw an error when no config specified', function (done) {
         assert.throws(function () {
             let collection = new Collection();
-
         }, Error, 'No error thrown');
+        done();
     });
 
     describe('query', function () {
@@ -123,22 +120,20 @@ describe('Collection', function () {
             });
         });
 
-        it('should throw an error on invalid config 1', function () {
+        it('should throw an error on invalid config 1', function (done) {
             assert.throws(function () {
                 let collection = new Collection(_db.collection('teststats'));
-                collection.updateStats({}, function () {
-                });
-
+                collection.updateStats({}, function () {});
             }, Error, 'No error thrown');
+            done();
         });
 
-        it('should throw an error on invalid config 2', function () {
+        it('should throw an error on invalid config 2', function (done) {
             assert.throws(function () {
                 let collection = new Collection(_db.collection('teststats'));
-                collection.updateStats({statsField: '123'}, function () {
-                });
-
+                collection.updateStats({statsField: '123'}, function () {});
             }, Error, 'No error thrown');
+            done();
         });
 
         it('should update stats', function (done) {
@@ -203,8 +198,7 @@ describe('Collection', function () {
             });
         });
 
-
-        it('should update mulyiple stats', function (done) {
+        it('should update multiple stats', function (done) {
             let date = new Date();
             let momentDate = new moment(date).utc();
             let year = momentDate.year();

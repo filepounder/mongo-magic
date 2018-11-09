@@ -87,6 +87,17 @@ describe('Collection', function () {
             });
         });
 
+        it('should count the documents', function (done) {
+            let collection = new Collection(_db.collection('testquery'));
+
+            let mQuery = new MongoQuery({});
+            collection.count(mQuery, function (err, count) {
+                assert(!err, 'Error Occurred');
+                assert.equal(count, 2, 'Invalid count');
+                done();
+            });
+        });
+
         it('should stream results', function (done) {
             let collection = new Collection(_db.collection('testquery'));
             let ws = new $stream.Writable({objectMode: true});

@@ -16,6 +16,7 @@
     "url": "git+https://github.com/filepounder/mongo-magic.git"
   },
   "keywords": [
+    "filepounder",
     "mongodb"
   ],
   "author": {

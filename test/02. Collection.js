@@ -8,8 +8,7 @@ const Collection = require('../lib').Collection;
 const MongoQuery = require('../lib').MongoQuery;
 
 const config = {
-    'databaseName': 'mongoutilstests',
-    'connectionString': 'mongodb://localhost:27017',
+    'connectionString': 'mongodb://localhost:27017/mongoutilstests',
     'connectionOptions': {
         'useNewUrlParser': true
     }
@@ -33,7 +32,7 @@ describe('Collection', function () {
                 });
             },
             (cb) => {
-                _db = client.db(config.databaseName);
+                _db = client.db();
 
                 _db.collections(function (err, collections) {
                     if (err) {

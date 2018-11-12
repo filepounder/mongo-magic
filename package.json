@@ -20,8 +20,7 @@
     "mongodb"
   ],
   "author": {
-    "name": "FilePounder Inc.",
-    "email": "info@filepounder.com",
+    "name": "FilePounder, Inc.",
     "url": "https://filepounder.com"
   },
   "contributors": [
@@ -36,7 +35,6 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "async": "2.6.1",
     "check-types": "7.4.0",
     "merge": "1.2.1",
     "moment": "2.22.2",
@@ -45,6 +43,7 @@
     "underscore.string": "3.3.5"
   },
   "devDependencies": {
+    "async": "^2.6.1",
     "mocha": "^5.2.0"
   }
 }

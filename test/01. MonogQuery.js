@@ -152,6 +152,9 @@ describe('Mongo Query', function () {
             done();
         });
 
+
+
+
         it('should parse a raw query with and null', function (done) {
             let mongoQuery = new MongoQuery({$rawQuery:{"field1.field2":{"$string":null}}});
 

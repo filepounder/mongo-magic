@@ -15,6 +15,7 @@ let client = null;
 let _db = null;
 
 describe('Mongo Query', function () {
+    this.timeout(30000)
     before(function (done) {
         async.waterfall([
             (cb) => {
@@ -120,6 +121,56 @@ describe('Mongo Query', function () {
             let mongoQuery = new MongoQuery('$rawQuery={"field1.field2":{"$date":"2016-01-01T00:00:00Z"}}');
 
             assert.deepEqual(mongoQuery.parsedQuery.query, {'field1.field2': new Date('2016-01-01T00:00:00Z')}, 'Invalid Raw Query');
+            done();
+        });
+
+        it('should parse a raw query with array', function (done) {
+            let mongoQuery = new MongoQuery({$rawQuery:{$or:[{"field1.field2":{"$date":"2016-01-01T00:00:00Z"}}]}});
+
+            assert.deepEqual(mongoQuery.parsedQuery.query, {$or:[{'field1.field2': new Date('2016-01-01T00:00:00Z')}]}, 'Invalid Raw Query');
+            done();
+        });
+
+        it('should parse a raw query with int', function (done) {
+            let mongoQuery = new MongoQuery({$rawQuery:{"field1.field2":{"$int":"1"}}});
+
+            assert.deepEqual(mongoQuery.parsedQuery.query, {'field1.field2': 1}, 'Invalid Raw Query');
+            done();
+        });
+
+        it('should parse a raw query with int', function (done) {
+            let mongoQuery = new MongoQuery({$rawQuery:{"field1.field2":{"$float":"1.2"}}});
+
+            assert.deepEqual(mongoQuery.parsedQuery.query, {'field1.field2': 1.2}, 'Invalid Raw Query');
+            done();
+        });
+
+        it('should parse a raw query with string', function (done) {
+            let mongoQuery = new MongoQuery({$rawQuery:{"field1.field2":{"$string":123}}});
+
+            assert.deepEqual(mongoQuery.parsedQuery.query, {'field1.field2': "123"}, 'Invalid Raw Query');
+            done();
+        });
+
+        it('should parse a raw query with and null', function (done) {
+            let mongoQuery = new MongoQuery({$rawQuery:{"field1.field2":{"$string":null}}});
+
+            assert.deepEqual(mongoQuery.parsedQuery.query, {'field1.field2': null}, 'Invalid Raw Query');
+            done();
+        });
+
+        it('should parse a raw query with string and boolean', function (done) {
+            let mongoQuery = new MongoQuery({$rawQuery:{"field1.field2":{"$string":false}}});
+
+            assert.deepEqual(mongoQuery.parsedQuery.query, {'field1.field2': "false"}, 'Invalid Raw Query');
+            done();
+        });
+
+
+        it('should parse a raw query with array and qs', function (done) {
+            let mongoQuery = new MongoQuery('$rawQuery={"$or":[{"field1.field2":{"$date":"2016-01-01T00:00:00Z"}}]}');
+
+            assert.deepEqual(mongoQuery.parsedQuery.query, {$or:[{'field1.field2': new Date('2016-01-01T00:00:00Z')}]}, 'Invalid Raw Query');
             done();
         });
 

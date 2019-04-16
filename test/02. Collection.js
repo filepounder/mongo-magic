@@ -19,6 +19,7 @@ let client = null;
 let _db = null;
 
 describe('Collection', function () {
+    this.timeout(30000)
     before(function (done) {
         async.waterfall([
             (cb) => {

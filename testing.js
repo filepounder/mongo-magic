@@ -1,48 +1,59 @@
-var mongoUtils=require('./index.js');
-var mongo=require("mongodb");
-var util=require('util');
+const $merge=require('deepmerge')
 
-console.log(mongoUtils.utils.generateId());
-console.log(mongoUtils.utils.isValidId('57ef64b1e0a04c31ac9bbe1c'));
-console.log(mongoUtils.utils.isValidId('57ef64b1e0a04c31ac9bbe1'));
-console.log(mongoUtils.utils.parseId('57ef64b1e0a04c31ac9bbe1c'));
+function isMergeableObject(o){
 
-var testQuery=new mongoUtils.MongoQuery(
-    "$select=a,b, c" +
-    "&$sort=c,-a,b desc" +
-    "&$skip=2" +
-    "&$limit=100" +
-    "&$filter=field eq 'val'" +
-    '&$rawQuery={"$and":[{"field2":1}]}'
-    ,{val1:123});
-console.log(util.inspect(testQuery,{depth:null}));
+    if (Array.isArray(o))return true;
 
-testQuery=new mongoUtils.MongoQuery({
-    $select:"a,b, c",
-    $rawQuery:{val2:3}
+    const isObject=(val)=> {
+        return val != null && typeof val === 'object' && Array.isArray(val) === false;
+    };
+
+    const isObjectObject=(o)=> {
+        return isObject(o) === true
+            && Object.prototype.toString.call(o) === '[object Object]';
+    };
+
+
+    let ctor,prot;
+
+    if (isObjectObject(o) === false) return false;
+
+    // If has modified constructor
+    ctor = o.constructor;
+    if (typeof ctor !== 'function') return false;
+
+    // If has modified prototype
+    prot = ctor.prototype;
+    if (isObjectObject(prot) === false) return false;
+
+    // If constructor does not have an Object-specific method
+    if (prot.hasOwnProperty('isPrototypeOf') === false) {
+        return false;
+    }
+
+    // Most likely a plain Object
+    return true;
 }
-   ,{val1:123});
-console.log(util.inspect(testQuery,{depth:null}));
 
-function dbConnected(err, database) {
-    if (err) return console.error(err);
-    console.log("connected to database:" + database.serverConfig.host + ":" + database.databaseName);
+const emptyTarget = value => Array.isArray(value) ? [] : {};
+const clone = (value, options) => $merge(emptyTarget(value), value, options);
+function combineMerge(target, source, options) {
+    const destination = target.slice();
 
-    var qStr='$limit=20&$skip=1&';
-    var mQuery=new mongoUtils.MongoQuery(qStr,{val1:123});
-    var collection=new mongoUtils.Collection(database.collection("test1"));
-    collection.query(mQuery,function(err,results){
-        if (err)return console.error(err);
-        console.log(util.inspect(results,{depth:null}));
+    source.forEach(function(e, i) {
+        if (typeof destination[i] === 'undefined') {
+            const cloneRequested = options.clone !== false
+            const shouldClone = cloneRequested && options.isMergeableObject(e)
+            destination[i] = shouldClone ? clone(e, options) : e
+        } else if (options.isMergeableObject(e)) {
+            destination[i] = $merge(target[i], e, options)
+        } else if (target.indexOf(e) === -1) {
+            destination.push(e)
+        }
     });
-
-    try{
-        collection.query("$filter=test",function(err,results){
-            if (err)return console.error(err);
-            console.log(util.inspect(results,{depth:null}));
-        })
-    }catch (exp){console.error(exp)}
-
+    return destination
 }
 
-mongo.MongoClient.connect( "mongodb://127.0.0.1/testutils",dbConnected);
+
+
+console.log($merge({a:["1"]},{a:["2"]},{isMergeableObject:isMergeableObject,arrayMerge: combineMerge }))

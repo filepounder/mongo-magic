@@ -2,7 +2,7 @@ const assert = require('assert');
 const async = require('async');
 const MongoClient = require('mongodb').MongoClient;
 const MongoQuery = require('../lib').MongoQuery;
-
+const $mongodb=require('mongodb')
 const config = {
     'databaseName': 'mongoutilstests',
     'connectionString': 'mongodb://localhost:27017',
@@ -194,6 +194,35 @@ describe('Mongo Query', function () {
                 field1: new Date('2016-01-01T00:00:00Z'),
                 field2: 'a',
                 field3: 3
+            }, 'Invalid Query');
+            done();
+        });
+
+        it('should parse a raw query and filter with a mongo id', function (done) {
+            let objectId=new $mongodb.ObjectId()
+            let mongoQuery = new MongoQuery('$filter=field2 eq \'a\'&$rawQuery={"field1":{"$date":"2016-01-01T00:00:00Z"}}', {field3: objectId});
+
+            assert.deepEqual(mongoQuery.parsedQuery.query, {
+                field1: new Date('2016-01-01T00:00:00Z'),
+                field2: 'a',
+                field3: objectId
+            }, 'Invalid Query');
+            done();
+        });
+
+        it('should parse a raw query and filter with a array', function (done) {
+            let objectId=new $mongodb.ObjectId()
+            let mongoQuery = new MongoQuery('$rawQuery={"$and":[{"field2":"x"}],"field1":{"$date":"2016-01-01T00:00:00Z"}}', {field3: objectId,"$and":[{"field4":"y"}]});
+
+            assert.deepEqual(mongoQuery.parsedQuery.query, {
+                field1: new Date('2016-01-01T00:00:00Z'),
+                "$and": [
+                    {
+                        "field2": "x",
+                        "field4": "y"
+                    }
+                ],
+                field3: objectId
             }, 'Invalid Query');
             done();
         });

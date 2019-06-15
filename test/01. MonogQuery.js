@@ -145,6 +145,22 @@ describe('Mongo Query', function () {
             done();
         });
 
+        it('should parse a raw query with objectId string', function (done) {
+            let objectId=new $mongodb.ObjectId()
+            let mongoQuery = new MongoQuery({$rawQuery:{"field1.field2":{"$objectId":objectId.toString()}}});
+
+            assert.deepEqual(mongoQuery.parsedQuery.query, {'field1.field2': objectId}, 'Invalid Raw Query');
+            done();
+        });
+
+        it('should parse a raw query with objectId object', function (done) {
+            let objectId=new $mongodb.ObjectId()
+            let mongoQuery = new MongoQuery({$rawQuery:{"field1.field2":{"$objectId":objectId}}});
+
+            assert.deepEqual(mongoQuery.parsedQuery.query, {'field1.field2': objectId}, 'Invalid Raw Query');
+            done();
+        });
+
         it('should parse a raw query with string', function (done) {
             let mongoQuery = new MongoQuery({$rawQuery:{"field1.field2":{"$string":123}}});
 

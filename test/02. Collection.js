@@ -18,6 +18,7 @@ let client = null;
 let _db = null;
 
 describe('Collection', function () {
+    this.timeout(30000)
     before(function (done) {
         async.waterfall([
             (cb) => {
@@ -131,19 +132,24 @@ describe('Collection', function () {
         });
 
         it('should throw an error on invalid config 1', function (done) {
-            assert.throws(function () {
                 let collection = new Collection(_db.collection('teststats'));
-                collection.updateStats({}, function () {});
-            }, Error, 'No error thrown');
-            done();
+                collection.updateStats({}, function (err) {
+                    assert(err,"no error")
+                    done();
+                });
+
+
         });
 
         it('should throw an error on invalid config 2', function (done) {
-            assert.throws(function () {
-                let collection = new Collection(_db.collection('teststats'));
-                collection.updateStats({statsField: '123'}, function () {});
-            }, Error, 'No error thrown');
-            done();
+
+            let collection = new Collection(_db.collection('teststats'));
+            collection.updateStats({statsField: '123'}, function (err) {
+                assert(err,"no error")
+                done();
+            });
+
+
         });
 
         it('should update stats', function (done) {

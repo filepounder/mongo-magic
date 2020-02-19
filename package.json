@@ -1,6 +1,6 @@
 {
   "name": "@filepounder/mongo-magic",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "mongo magic utils",
   "main": "index.js",
   "files": [

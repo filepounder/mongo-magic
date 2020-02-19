@@ -6,7 +6,8 @@ const $mongodb=require('mongodb')
 const config = {
     'connectionString': 'mongodb://localhost:27017/mongoutilstests',
     'connectionOptions': {
-        'useNewUrlParser': true
+        useNewUrlParser: true,
+        useUnifiedTopology: true
     }
 };
 

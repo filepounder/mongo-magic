@@ -10,7 +10,8 @@ const MongoQuery = require('../lib').MongoQuery;
 const config = {
     'connectionString': 'mongodb://localhost:27017/mongoutilstests',
     'connectionOptions': {
-        'useNewUrlParser': true
+        useNewUrlParser: true,
+        useUnifiedTopology: true
     }
 };
 

@@ -63,3 +63,6 @@ package/
 
 # IDE files
 .idea
+
+# NPM
+package-lock.json

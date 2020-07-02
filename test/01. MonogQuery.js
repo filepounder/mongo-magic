@@ -242,5 +242,36 @@ describe('Mongo Query', function () {
             }, 'Invalid Query');
             done();
         });
+
+
+
     });
+
+    describe('Merge', function () {
+        it('should merge a query with no from and to', function () {
+            assert.equal(MongoQuery.mergeMongoQuery(),null,"Invalid parse")
+        });
+
+        it('should merge a query with no from', function () {
+            assert.deepEqual(MongoQuery.mergeMongoQuery({a:1}), {a:1},"Invalid parse")
+        });
+
+        it('should merge a query with no to', function () {
+            assert.deepEqual(MongoQuery.mergeMongoQuery(null,{a:2}), {a:2},"Invalid parse")
+        });
+
+        it('should merge a query', function () {
+            assert.deepEqual(MongoQuery.mergeMongoQuery({a:1},{a:2}), {$and:[{a:1},{a:2}]},"Invalid parse")
+        });
+
+        it('should merge a query', function () {
+            assert.deepEqual(MongoQuery.mergeMongoQuery({a:2},{$and:[{a:1}]}), {$and:[{a:1},{a:2}]},"Invalid parse")
+        });
+
+        it('should merge a query with or', function () {
+            assert.deepEqual(MongoQuery.mergeMongoQuery({a:1},{a:2},"or"), {$or:[{a:1},{a:2}]},"Invalid parse")
+        });
+    });
+
+
 });

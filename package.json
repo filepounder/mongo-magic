@@ -1,6 +1,6 @@
 {
   "name": "@filepounder/mongo-magic",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "mongo magic utils",
   "main": "index.js",
   "files": [
@@ -35,12 +35,11 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "check-types": "8.0.2",
+    "check-types": "11.1.2",
     "deepcopy": "2.0.0",
     "deepmerge": "3.2.0",
-    "merge": "1.2.1",
     "moment": "2.24.0",
-    "mongodb": "3.5.3",
+    "mongodb": "3.5.9",
     "odata-parser": "1.4.1",
     "underscore.string": "3.3.5"
   },
